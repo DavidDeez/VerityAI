@@ -1,0 +1,16 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "verityai"
+version = "0.1.0"
+description = "VerityAI SDK for AI observability and evaluation."
+authors = [{ name = "VerityAI", email = "hello@verityai.com" }]
+dependencies = [
+    "httpx>=0.24.0",
+    "pydantic>=2.0.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]

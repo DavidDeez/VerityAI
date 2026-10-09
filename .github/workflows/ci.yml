@@ -13,9 +13,9 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_USER: reliantai
-          POSTGRES_PASSWORD: reliantai_password
-          POSTGRES_DB: reliantai
+          POSTGRES_USER: verityai
+          POSTGRES_PASSWORD: verityai_password
+          POSTGRES_DB: verityai
         ports:
           - 5432:5432
         options: >-
