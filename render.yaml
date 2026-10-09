@@ -1,0 +1,57 @@
+services:
+  - type: web
+    name: verityai-backend
+    env: docker
+    region: oregon
+    plan: free
+    rootDir: ./backend
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    envVars:
+      - key: POSTGRES_SERVER
+        fromDatabase:
+          name: verityai-db
+          property: host
+      - key: POSTGRES_PORT
+        fromDatabase:
+          name: verityai-db
+          property: port
+      - key: POSTGRES_DB
+        fromDatabase:
+          name: verityai-db
+          property: database
+      - key: POSTGRES_USER
+        fromDatabase:
+          name: verityai-db
+          property: user
+      - key: POSTGRES_PASSWORD
+        fromDatabase:
+          name: verityai-db
+          property: password
+      - key: SECRET_KEY
+        generateValue: true
+
+  - type: web
+    name: verityai-frontend
+    env: docker
+    region: oregon
+    plan: free
+    rootDir: ./frontend
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: BACKEND_URL
+        fromService:
+          type: web
+          name: verityai-backend
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: NEXT_PUBLIC_API_URL
+        # In Render dashboard, you may need to append /api/v1 to the backend URL manually
+        # Or we can handle it in the frontend code
+        value: https://verityai-backend.onrender.com/api/v1
+
+databases:
+  - name: verityai-db
+    region: oregon
+    plan: free
+    databaseName: verityai
+    user: verityai
